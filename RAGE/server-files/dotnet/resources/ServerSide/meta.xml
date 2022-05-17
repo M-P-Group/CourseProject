@@ -1,0 +1,4 @@
+﻿<meta>
+  <info name="BubbleRP" type="script" />
+  <script src="bin\x64\Debug\netcoreapp3.1\ServerSide.dll" />
+</meta>

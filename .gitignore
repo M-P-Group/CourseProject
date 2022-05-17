@@ -24,6 +24,8 @@ RAGE/mp.png
 RAGE/mp.ico
 RAGE/server-files/dotnet/resources/ServerSide/bin/
 
+
+
 RAGE/server-files/dotnet/runtime/*
 !RAGE/server-files/dotnet/runtime/Bootstrapper.dll
 
@@ -31,3 +33,4 @@ RAGE/server-files/dotnet/server_exceptions.txt
 RAGE/server-files/dotnet/server_logs.txt
 RAGE/server-files/dotnet/vehicleData.json
 
+RAGE/server-files/ragemp-server.exe.old.tmp

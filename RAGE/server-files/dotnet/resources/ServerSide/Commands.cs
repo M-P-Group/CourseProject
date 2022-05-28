@@ -42,5 +42,49 @@ namespace ServerSide
             player.Health = 100;
             player.SendChatMessage("Healed!");
         }
+
+
+        [Command("marker")]
+        public void Marker(Player player, uint markerType)
+        {
+            NAPI.Marker.CreateMarker(markerType, player.Position, new Vector3(), new Vector3(), 1f, new Color(255, 0, 0, 100), false, player.Dimension);
+        }
+
+        private Checkpoint _prevCheckpoint;
+        [Command("checkpoint")]
+        public void Checkpoint(Player player, uint checkpointType)
+        {
+            var direction = _prevCheckpoint?.Position ?? player.Position;
+
+            _prevCheckpoint = NAPI.Checkpoint.CreateCheckpoint(checkpointType, player.Position + new Vector3(0f, 0f, -1f), direction, 1f, new Color(255, 0, 0, 100), player.Dimension);
+        }
+
+        [Command("blip")]
+        public void Blip(Player player, uint sprite, byte color, string name, bool shortRange)
+        {
+            NAPI.Blip.CreateBlip(sprite, player.Position, 1f, color, name, 255, 0f, shortRange, 0, player.Dimension);
+        }
+
+
+        [Command("colshape")]
+        public void Colshape(Player player, float scale)
+        {
+            var position = player.Position + new Vector3(0f, 0f, -1f);
+
+            var colShape = NAPI.ColShape.CreateCylinderColShape(position, scale, 2f, player.Dimension);
+            colShape.SetData(nameof(GTANetworkAPI.Marker), NAPI.Marker.CreateMarker(1, position, new Vector3(), new Vector3(), scale * 2, new Color(255, 0, 0, 100), false, player.Dimension));
+
+            colShape.OnEntityEnterColShape += OnEntityEnterColShape;
+            colShape.OnEntityExitColShape += OnEntityExitColShape;
+        }
+
+        private void OnEntityEnterColShape(ColShape colShape, Player player)
+        {
+            player.Armor = 100;
+        }
+        private void OnEntityExitColShape(ColShape colShape, Player player)
+        {
+            player.Armor = 0;
+        }
     }
 }

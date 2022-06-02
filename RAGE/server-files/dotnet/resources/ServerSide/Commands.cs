@@ -86,5 +86,10 @@ namespace ServerSide
         {
             player.Armor = 0;
         }
+        [Command("randomizeme")]
+        private void RandomizeMe(Player player)
+        {
+            player.TriggerEvent("SERVER:CLIENT:RandomizePlayer");
+        }
     }
 }
